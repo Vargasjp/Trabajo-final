@@ -1,0 +1,24 @@
+{% extends "AppConcesionaria/padre.html" %}
+
+{% load static %}
+
+
+{% block titulo_de_pagina %}
+<h1 class="nb-5">Busqueda de Clientes</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h1>Buscamos clientes por dni</h1>
+
+<form action="{% url 'buscar' %}" method="GET"> {% csrf_token %}
+
+<p>DNI: <input type="number" name="dni", id="dni"></p>
+     
+<input type="submit", value="Buscar">
+
+</form>
+
+<h2>{{ mensaje }}</h2>
+
+{% endblock %}

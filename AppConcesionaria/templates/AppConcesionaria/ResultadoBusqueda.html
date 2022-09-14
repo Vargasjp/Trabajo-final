@@ -1,0 +1,31 @@
+{% extends "AppConcesionaria/padre.html" %}
+
+{% load static %}
+
+
+{% block titulo_de_pagina %}
+<h1 class="nb-5">Resultado de la busqueda</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+{% if mensaje %}
+<h2>{{ mensaje }}</h2>
+{% else %}
+
+
+<h1>Resultado de la busqueda:</h1>
+
+{% for cli in cliente %}
+
+<h2>Nombre: {{ cli.nombre }}</h2>
+<h2>Apellido: {{ cli.apellido }}</h2>
+<h2>Correo: {{ cli.email }}</h2>
+<h2>DNI: {{ cli.dni }}</h2>
+
+
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

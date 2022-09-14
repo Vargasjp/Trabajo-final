@@ -1,0 +1,20 @@
+{% extends "AppConcesionaria/padre.html" %}
+
+{% load static %}
+
+
+{% block titulo_de_pagina %}
+<h1 class="nb-5">Nuestros Vehiculos</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+{% for v in vehiculos %}
+<h4> Tipo: {{v.tipo}} <br> Marca: {{ v.marca }} <br> Color: {{v.color}} <br> Kilometros: {{v.kilometros}} <br> ------------- </h4>
+
+
+{% endfor %} 
+
+
+
+{% endblock %}
