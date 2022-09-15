@@ -3,6 +3,9 @@ from django.shortcuts import render
 
 from AppConcesionaria.forms import *
 from .models import Vehiculos, Clientes, Empleados
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def inicio(request):
@@ -18,7 +21,9 @@ def vehiculosformulario(request):
             tipo=info.get("tipo")
             color=info.get("color")
             kilometros=info.get("kilometros")
-            vehiculo=Vehiculos(marca=marca, tipo=tipo, color=color, kilometros=kilometros)
+            imagen=info.get("imagen")
+            fechaDePublicacion=info.get("fechaDePublicacion")
+            vehiculo=Vehiculos(marca=marca, tipo=tipo, color=color, kilometros=kilometros, imagen=imagen, fechaDePublicacion=fechaDePublicacion)
             vehiculo.save()
             return render(request, "AppConcesionaria/inicio.html", {"mensaje": "Vehiculo Agregado"})
         else:
@@ -88,3 +93,53 @@ def leerVehiculos(request):
     vehiculos=Vehiculos.objects.all()
     contexto={"vehiculos":vehiculos}
     return render(request, "AppConcesionaria/nuestrosVehiculos.html", contexto)
+
+def login_request(request):
+    if request.method=="POST":
+        form=AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            usu=form.cleaned_data.get("username")
+            clave=form.cleaned_data.get("password")
+            usuario=authenticate(username=usu, password=clave)
+            if usuario is not None:
+                login(request, usuario)
+                return render(request, "AppConcesionaria/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
+            else:
+                return render(request, "AppConcesionaria/login.html", {"form":form,"mensaje":"Usuario o contraseña incorrectos"})
+        else:
+            return render(request, "AppConcesionaria/login.html", {"form":form,"mensaje":"Formulario Invalido"})
+    else:
+        form=AuthenticationForm()
+        return render(request, "AppConcesionaria/login.html", {"form":form})
+
+def register(request):
+    if request.method=="POST":
+        form=UserRegisterForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data["username"]
+            form.save()
+            return render(request, "AppConcesionaria/inicio.html", {"mensaje":f"Usuario: {username} creado"})
+    else:
+        form=UserRegisterForm()
+    return render(request,"AppConcesionaria/register.html", {"form":form})
+
+@login_required
+def editarPerfil(request):
+    usuario=request.user
+    if request.method=="POST":
+        form=UserEditform(request.POST, instance=usuario)
+        if form.is_valid():
+            usuario.first_name=form.cleaned_data["first_name"]
+            usuario.last_name=form.cleaned_data["last_name"]
+            usuario.email=form.cleaned_data["email"]
+            usuario.save()
+            return render(request, "AppConcesionaria/inicio.html", {"mensaje":f"Perfil de {usuario} editado"})
+    else:
+        form=UserEditform(instance=usuario)
+        return render(request, "AppConcesionaria/editarPerfil.html", {"form":form, "usuario":usuario})
+
+def verMas(request,id):
+    vehi=Vehiculos.objects.get(id=id)
+    contexto={"vehiculo":vehi}
+    return render(request, "AppConcesionaria/verMas.html", contexto)
+    

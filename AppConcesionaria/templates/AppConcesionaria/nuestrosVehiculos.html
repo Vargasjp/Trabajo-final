@@ -10,10 +10,18 @@
 {% block contenido_que_cambia %}
 
 {% for v in vehiculos %}
-<h4> Tipo: {{v.tipo}} <br> Marca: {{ v.marca }} <br> Color: {{v.color}} <br> Kilometros: {{v.kilometros}} <br> ------------- </h4>
+<h2>
+    <p style="color: white">
+        Tipo: {{v.tipo}} <br> Marca: {{ v.marca }} <br> Color: {{v.color}} <br> Kilometros:
+        {{v.kilometros}} <br> </p>
 
+</h2>
+<button>
+    <a href="{% url 'verMas' v.id %}">Ver más</a>
 
-{% endfor %} 
+</button>
+<p style="color: white">----------------------------------------------</p>
+{% endfor %}
 
 
 

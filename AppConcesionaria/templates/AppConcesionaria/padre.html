@@ -10,7 +10,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Concesionaria</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -26,7 +26,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container px-4 px-lg-5">
-            
+
             <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -34,13 +34,20 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
+                <a class="navbar-brand" href="{% url 'inicio' %}">Inicio</a>
                 <a class="navbar-brand" href="{% url 'empleadosFormulario' %}">Empleado</a>
-                <a class="navbar-brand" href="{% url 'vehiculosFormulario' %}">Vehiculo</a>
+                <a class="navbar-brand" href="{% url 'nuestrosVehiculos' %}">Nuestros Vehiculos</a>
                 <a class="navbar-brand" href="{% url 'clientesFormulario' %}">Cliente</a>
                 <ul class="navbar-nav ms-auto">
 
-                    <a class="navbar-brand" href="{% url 'busquedaCliente' %}">Buscar Clientes</a>
-                    <a class="navbar-brand" href="{% url 'inicio' %}">Inicio</a>
+                    {% if not request.user.is_authenticated %}
+                    <a class="navbar-brand" href="{% url 'login' %}">Iniciar Sesion</a>
+                    <a class="navbar-brand" href="{% url 'register' %}">Registrate!</a>
+                    {% else %}
+                    <p>Hola {{ user.username }}</p>
+                    <img src="{{ imagen }}" alt="">
+                    <a class="navbar-brand" href="{% url 'logout' %}">Cerrar Sesion</a>
+                    {% endif %}
 
 
                 </ul>
@@ -58,13 +65,18 @@
         </div>
     </header>
     <!-- About-->
-    <div>
-        {% block contenido_que_cambia %}
-        {% endblock %}
-    </div>
+
+
     <section class="about-section text-center" id="about">
         <div class="container px-4 px-lg-5">
+            <div>
+                <p class="text-whit-50">
+                    {% block contenido_que_cambia %}
+                    {% endblock %}
+                </p>
+            </div>
             <div class="row gx-4 gx-lg-5 justify-content-center">
+
                 <div class="col-lg-8">
                     <h2 class="text-white mb-4">Built with Bootstrap 5</h2>
                     <p class="text-white-50">
@@ -75,7 +87,7 @@
                     </p>
                 </div>
             </div>
-            <img class="img-fluid" src="assets/img/ipad.png" alt="..." />
+            <img class="img-fluid" src="static/assets/img/ipad.png" alt="..." />
         </div>
     </section>
     <!-- Projects-->
@@ -83,8 +95,8 @@
         <div class="container px-4 px-lg-5">
             <!-- Featured Project Row-->
             <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-                <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/bg-masthead.jpg"
-                        alt="..." /></div>
+                <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0"
+                        src="static/assets/img/bg-masthead.jpg" alt="..." /></div>
                 <div class="col-xl-4 col-lg-5">
                     <div class="featured-text text-center text-lg-left">
                         <h4>Shoreline</h4>
@@ -96,7 +108,8 @@
             </div>
             <!-- Project One Row-->
             <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                <div class="col-lg-6"><img class="img-fluid" src="assets/img/demo-image-01.jpg" alt="..." /></div>
+                <div class="col-lg-6"><img class="img-fluid" src="static/assets/img/demo-image-01.jpg" alt="..." />
+                </div>
                 <div class="col-lg-6">
                     <div class="bg-black text-center h-100 project">
                         <div class="d-flex h-100">
@@ -112,7 +125,8 @@
             </div>
             <!-- Project Two Row-->
             <div class="row gx-0 justify-content-center">
-                <div class="col-lg-6"><img class="img-fluid" src="assets/img/demo-image-02.jpg" alt="..." /></div>
+                <div class="col-lg-6"><img class="img-fluid" src="static/assets/img/demo-image-02.jpg" alt="..." />
+                </div>
                 <div class="col-lg-6 order-lg-first">
                     <div class="bg-black text-center h-100 project">
                         <div class="d-flex h-100">
@@ -163,10 +177,7 @@
                         <div class="d-none" id="submitSuccessMessage">
                             <div class="text-center mb-3 mt-2 text-white">
                                 <div class="fw-bolder">Form submission successful!</div>
-                                To activate this form, sign up at
-                                <br />
-                                <a
-                                    href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+
                             </div>
                         </div>
                         <!-- Submit error message-->
@@ -216,11 +227,7 @@
                     </div>
                 </div>
             </div>
-            <div class="social d-flex justify-content-center">
-                <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
-                <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
-            </div>
+
         </div>
     </section>
     <!-- Footer-->
