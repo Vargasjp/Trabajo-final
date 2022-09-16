@@ -140,6 +140,6 @@ def editarPerfil(request):
 
 def verMas(request,id):
     vehi=Vehiculos.objects.get(id=id)
-    contexto={"vehiculo":vehi}
-    return render(request, "AppConcesionaria/verMas.html", contexto)
+    imagen=vehi.imagen
+    return render(request, "AppConcesionaria/verMas.html", { "vehiculo":vehi, "imagen":imagen})
     
