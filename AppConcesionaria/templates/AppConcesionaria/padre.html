@@ -46,6 +46,8 @@
                     {% else %}
                     <p>Hola {{ user.username }}</p>
                     <img src="{{ imagen }}" alt="">
+
+                    <a class="navbar-brand" href="{% url 'mensajeLista' %}">Mensajes</a>
                     <a class="navbar-brand" href="{% url 'logout' %}">Cerrar Sesion</a>
                     {% endif %}
 
