@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.dispatch import receiver
 from .models import Mensajes
 from .forms import MensajeForm
-
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView
@@ -30,4 +30,4 @@ class crearMensaje(LoginRequiredMixin, CreateView):
 class eliminarMensaje(LoginRequiredMixin, DeleteView):
 
     model=Mensajes
-    successUrl = "/AppMensajes/"
+    success_url = "/Mensajes/"
