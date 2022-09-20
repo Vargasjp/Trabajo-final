@@ -1,0 +1,37 @@
+{% extends "AppConcesionaria/padre.html" %}
+
+{% load static %}
+
+
+{% block titulo_de_pagina %}
+<h1 class="nb-5">Mensajes</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<section class="page-info-section set-bg" data-setbg="{% static 'img/page-top-bg/4.jpg' %}">
+    <div class="pi-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-lg-6 text-white">
+                    <form method="post">
+                        {% csrf_token %}
+                        ¿Estás seguro de que deseas borrar el mensaje {{object.titulo}}? 
+                        <div class="container mt-5">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-ok"></span>Confirmar
+                            </button>
+                            <a href="{% url 'inicio' %}" class="btn btn-default">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+{% endblock %}

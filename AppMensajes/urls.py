@@ -2,8 +2,8 @@ from django.urls import path
 from AppMensajes.views import *
 
 urlpatterns = [
-    path('', MensajeLista.as_view(), name="mensajeLista"),
-    path('nuevo/', CrearMensaje.as_view(), name="nuevoMensaje"),
-    path('<pk>/', MensajeDetalle.as_view(), name="detalleMensaje"),
-    path('eliminar/<pk>', EliminarMensaje.as_view(), name="eliminarMensaje"),
+    path('', mensajeLista.as_view(), name="Mensajes"),
+    path('nuevoMensaje/', crearMensaje.as_view(), name="crearMensaje"),
+    path('<pk>/', mensajeDetalle.as_view(), name="detalleMensaje"),
+    path('eliminar/<pk>', eliminarMensaje.as_view(), name="eliminarMensaje"),
 ]

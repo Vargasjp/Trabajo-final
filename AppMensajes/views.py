@@ -10,24 +10,24 @@ from django.views.generic.edit import CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
-class MensajeLista(LoginRequiredMixin, ListView):
+class mensajeLista(LoginRequiredMixin, ListView):
 
     model=Mensajes
     template_name="AppMensajes/mensajeLista.html"
 
-class MensajeDetalle(LoginRequiredMixin, DetailView):
+class mensajeDetalle(LoginRequiredMixin, DetailView):
 
     model=Mensajes
     template_name="AppMensajes/mensajeDetalle.html"
 
-class CrearMensaje(LoginRequiredMixin, CreateView):
+class crearMensaje(LoginRequiredMixin, CreateView):
 
     model=Mensajes
-    success_url="/messages/"
-    fields = ['remitente','recibido', 'mensaje', 'fecha', 'es leido']
+    success_url="/Mensajes/"
+    fields = ['titulo','remitente','recibido', 'mensaje', 'fecha']
 
 
-class EliminarMensaje(LoginRequiredMixin, DeleteView):
+class eliminarMensaje(LoginRequiredMixin, DeleteView):
 
     model=Mensajes
-    success_url = "/messages/"
+    successUrl = "/AppMensajes/"
