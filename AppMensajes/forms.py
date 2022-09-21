@@ -1,11 +1,15 @@
-
 from django import forms
+from ckeditor.widgets import CKEditorWidget
+
+class DateImput(forms.DateInput):
+    input_type = 'date'
 
 
-class MensajeForm(forms.Form):
-    titulo=forms.CharField(max_length=40)
-    remitente=forms.CharField(max_length=40)
-    recibido=forms.CharField(max_length=40)
-    mensaje=forms.CharField(max_length=1200)
-    fecha=forms.DateField()
+class MensajesForm(forms.Form):
+    mensaje=forms.CharField(widget=CKEditorWidget())
+
+class BuscarMensajesForm(forms.Form):
+    remitente=forms.CharField(max_length=50)
+    recibido=forms.CharField(max_length=50)
+    mensaje=forms.CharField(max_length=50)
     

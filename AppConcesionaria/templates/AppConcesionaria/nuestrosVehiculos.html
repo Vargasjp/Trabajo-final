@@ -16,13 +16,22 @@
         {{v.kilometros}} <br> </p>
 
 </h2>
+<div>
+    {% if v.imagen %}
+    <img class="card-img-top" src="{{v.imagen.url}}" alt="..."/>
+    {% endif %}
+</div>
 <button>
+    <a href="{% url 'editarVehiculo' v.id %}">Editar</a>
     <a href="{% url 'verMas' v.id %}">Ver más</a>
 
 </button>
 <p style="color: white">----------------------------------------------</p>
 {% endfor %}
 
+<button>
+    <a href="{% url 'busquedaVehiculo' %}">Buscar Vehiculo</a>
 
+</button>
 
 {% endblock %}

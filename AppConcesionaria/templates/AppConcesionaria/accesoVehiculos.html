@@ -9,15 +9,25 @@
 
 {% block contenido_que_cambia %}
 
-<form action="{% url 'vehiculosFormulario' %}" method="POST"> {% csrf_token %}
+<h2 class="text-center">Agregar Vehiculo</h2>
+    <br><br>
+    {% if miFormulario.errors %}
 
-<table>
+    <p style="color: rgb(252, 249, 249);"> Están mal los datos, revisar</p>
 
-    {{ formulario.as_table }}
-</table>
-     
-<input type="submit", value="Agregar">
-
-</form>
-
+    {% endif %}
+    <form class="text-center" action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        
+       
+        <table>
+            {{ formulario.as_table }}
+        </table>
+        <br>
+        <br>
+        <br>
+    
+        <input class="btn btn-outline-dark mt-auto" type="submit" value="Enviar"  href="">
+        
+        
+    </form>
 {% endblock %}

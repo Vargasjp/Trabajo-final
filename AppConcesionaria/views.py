@@ -1,8 +1,9 @@
 from django.http import HttpResponse
+from http.client import HTTPResponse
 from django.shortcuts import render
 
 from AppConcesionaria.forms import *
-from .models import Vehiculos, Clientes, Empleados
+from .models import Vehiculos, Avatar
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -10,90 +11,81 @@ from django.contrib.auth.decorators import login_required
 
 def inicio(request):
     return render(request, "AppConcesionaria/inicio.html")
-
+    
+def sobreNosotros(request):
+    return render(request, "AppConcesionaria/sobreNosotros.html")
+    
+#Nuestros vehiculos-------------
+@login_required
 def vehiculosformulario(request):
     if request.method=="POST":
-        miFormulario=VehiculoFormulario(request.POST)
-        print(miFormulario)
-        if miFormulario.is_valid():
-            info=miFormulario.cleaned_data
-            marca=info.get("marca")
-            tipo=info.get("tipo")
-            color=info.get("color")
-            kilometros=info.get("kilometros")
-            imagen=info.get("imagen")
-            fechaDePublicacion=info.get("fechaDePublicacion")
-            vehiculo=Vehiculos(marca=marca, tipo=tipo, color=color, kilometros=kilometros, imagen=imagen, fechaDePublicacion=fechaDePublicacion)
+        Vehiform=VehiculoFormulario(request.POST, files=request.FILES)
+        if Vehiform.is_valid():
+            print(Vehiform)
+            info=Vehiform.cleaned_data
+            vehiculo=Vehiculos(marca=info["marca"],tipo=info["tipo"],color=info["color"],kilometros=info["kilometros"],imagen=info["imagen"])
             vehiculo.save()
             return render(request, "AppConcesionaria/inicio.html", {"mensaje": "Vehiculo Agregado"})
         else:
             return render(request, "AppConcesionaria/inicio.html", {"mensaje": "Error"})
     else:
-        miFormulario=VehiculoFormulario()
-        return render(request, "AppConcesionaria/accesoVehiculos.html", {"formulario":miFormulario})
-
-def clientesformulario(request):
-    if request.method=="POST":
-        miFormulario=ClienteForm(request.POST)
-        print(miFormulario)
-        if miFormulario.is_valid():
-            info=miFormulario.cleaned_data
-            nombre=info.get("nombre")
-            apellido=info.get("apellido")
-            email=info.get("email")
-            dni=info.get("dni")
-            cliente=Clientes(nombre=nombre, apellido=apellido, email=email, dni=dni)
-            cliente.save()
-            return render(request, "AppConcesionaria/inicio.html", {"mensaje": "Cliente Agregado"})
-        else:
-            return render(request, "AppConcesionaria/inicio.html", {"mensaje": "Error"})
-    else:
-        miFormulario=ClienteForm()
-        return render(request, "AppConcesionaria/accesoClientes.html", {"formulario":miFormulario})
-
-def empleadosformulario(request):
-    if request.method=="POST":
-        miFormulario=EmpleadoForm(request.POST)
-        print(miFormulario)
-        if miFormulario.is_valid():
-            info=miFormulario.cleaned_data
-            nombre=info.get("nombre")
-            apellido=info.get("apellido")
-            dni=info.get("dni")
-            email=info.get("email")
-            cargo=info.get("cargo")
-            empleado=Empleados(nombre=nombre, apellido=apellido, dni=dni, email=email, cargo=cargo)
-            empleado.save()
-            return render(request, "AppConcesionaria/inicio.html", {"mensaje": "Empleado Agregado"})
-        else:
-            return render(request, "AppConcesionaria/inicio.html", {"mensaje": "Error"})
-    else:
-        miFormulario=EmpleadoForm()
-        return render(request, "AppConcesionaria/accesoEmpleados.html", {"formulario":miFormulario})
+        Vehiform=VehiculoFormulario()
+        return render(request, "AppConcesionaria/accesoVehiculos.html", {"formulario":Vehiform})
 
 
-def busquedaCliente(request):
-    return render(request, "AppConcesionaria/busquedaCliente.html")
+def busquedaVehiculo(request):
+    return render(request, "AppConcesionaria/busquedaVehiculo.html")
 
 def buscar(request):
-    if request.GET["dni"]:
-        dni=request.GET["dni"]
-        DNI=Clientes.objects.filter(dni=dni)
-        if len(DNI)!=0:
-            return render(request, "AppConcesionaria/ResultadoBusqueda.html", {"cliente":DNI})
+    if request.GET["marca"]:
+        marca=request.GET["marca"]
+        Marca=Vehiculos.objects.filter(marca=marca)
+        if len(Marca)!=0:
+            return render(request, "AppConcesionaria/ResultadoBusqueda.html", {"vehiculo":Marca})
         else:
-            return render(request, "AppConcesionaria/ResultadoBusqueda.html", {"mensaje": "No hay clientes con ese DNI"})
+            return render(request, "AppConcesionaria/ResultadoBusqueda.html", {"mensaje": "No hay vehiculos de esa Marca"})
     else:
-        return render(request, "AppConcesionaria/busquedaCliente.html", {"mensaje": "No enviaste datos!"})
+        return render(request, "AppConcesionaria/busquedaVehiculo.html", {"mensaje": "No enviaste datos!"})
 
-def sobreNosotros(request):
-    return render(request, "AppConcesionaria/sobreNosotros.html")
+
 
 def leerVehiculos(request):
     vehiculos=Vehiculos.objects.all()
     contexto={"vehiculos":vehiculos}
     return render(request, "AppConcesionaria/nuestrosVehiculos.html", contexto)
 
+@login_required
+def editarVehiculo(request,id):
+    vehi=Vehiculos.objects.get(id=id)
+    if request.method=="POST":
+        form=VehiculoFormulario(request.POST, request.FILES)
+        if form.is_valid():
+            data=form.cleaned_data
+            vehi.marca=data["marca"]
+            vehi.tipo=data["tipo"]
+            vehi.color=data["color"]
+            vehi.imagen=data["imagen"]
+            vehi.kilometros=data["kilometros"]            
+            vehi.save()            
+        return render(request, "AppConcesionaria/guardado.html", {"Vehiculo":vehi})
+    else:
+        form=VehiculoFormulario(initial={"marca":vehi.marca, "tipo":vehi.tipo, "color":vehi.color, "kilometros":vehi.kilometros, "imagen":vehi.imagen })
+        return render(request, "AppConcesionaria/editarVehiculo.html", {"formulario":form, "marca":vehi.marca, "id":vehi.id})
+
+
+def verMas(request,id):
+    vehi=Vehiculos.objects.get(id=id)
+    imagen=vehi.imagen
+    return render(request, "AppConcesionaria/verMas.html", { "vehiculo":vehi, "imagen":imagen})
+
+@login_required
+def eliminarVehiculo(request, id):
+    Vehi=Vehiculos.objects.get(id=id)
+    Vehi.delete()
+    vehiculos=Vehiculos.objects.all()
+    return render(request, "AppConcesionaria/nuestrosVehiculos.html", {"vehiculos":vehiculos})
+
+#usuario
 def login_request(request):
     if request.method=="POST":
         form=AuthenticationForm(request, data=request.POST)
@@ -138,8 +130,25 @@ def editarPerfil(request):
         form=UserEditform(instance=usuario)
         return render(request, "AppConcesionaria/editarPerfil.html", {"form":form, "usuario":usuario})
 
-def verMas(request,id):
-    vehi=Vehiculos.objects.get(id=id)
-    imagen=vehi.imagen
-    return render(request, "AppConcesionaria/verMas.html", { "vehiculo":vehi, "imagen":imagen})
-    
+def obtenerAvatar(request):
+    lista=Avatar.objects.filter(user=request.user)
+    if len(lista)!=0:
+        imagen=lista[0].imagen.url
+    else:
+        imagen=None
+    return imagen
+
+def agregarAvatar(request):
+    if request.method=="POST":
+        formulario=AvatarForm(request.POST, request.FILES)
+        if formulario.is_valid():
+            avatarViejo=Avatar.objects.filter(user=request.user)
+            if (len(avatarViejo)>0):
+                avatarViejo.delete()
+            avatar=Avatar(user=request.user , imagen=formulario.cleaned_data["imagen"])
+            avatar.save()
+            return render(request, "AppCoder/inicio.html", {"usuario":request.user, "mensaje":"AVATAR AGREGADO EXITOSAMENTE","imagen":obtenerAvatar(request)})
+    else:
+        formulario=AvatarForm()
+    return render(request, "AppCoder/agregarAvatar.html", {"form":formulario, "usuario":request.user,"imagen":obtenerAvatar(request)})
+

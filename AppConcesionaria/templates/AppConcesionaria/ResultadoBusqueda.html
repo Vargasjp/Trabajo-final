@@ -16,12 +16,14 @@
 
 <h1>Resultado de la busqueda:</h1>
 
-{% for cli in cliente %}
+{% for v in vehiculo %}
 
-<h2>Nombre: {{ cli.nombre }}</h2>
-<h2>Apellido: {{ cli.apellido }}</h2>
-<h2>Correo: {{ cli.email }}</h2>
-<h2>DNI: {{ cli.dni }}</h2>
+<h2>Marca: {{ v.marca }}</h2>
+<h2>Tipo: {{ v.tipo }}</h2>
+<h2>Color: {{ v.color }}</h2>
+<h2>Kilometros: {{ v.kilometros }}</h2>
+<h2>Imagen: {{ v.imagen }}</h2>
+<h2>Fecha de publicacion: {{ v.fechaDePublicacion }}</h2>
 
 
 {% endfor %}

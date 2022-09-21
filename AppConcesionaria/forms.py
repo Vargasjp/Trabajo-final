@@ -7,23 +7,8 @@ class VehiculoFormulario(forms.Form):
     tipo=forms.CharField(max_length=40)
     color=forms.CharField(max_length=40)
     kilometros=forms.IntegerField()
-    imagen=forms.ImageField(label="Imagen")
-    fechaDePublicacion=forms.DateField()
-
-
-class EmpleadoForm(forms.Form):
-    nombre=forms.CharField(max_length=40)
-    apellido=forms.CharField(max_length=40)
-    dni=forms.IntegerField()
-    email=forms.EmailField()
-    cargo=forms.CharField(max_length=40)
-
-class ClienteForm(forms.Form):
-    nombre=forms.CharField(max_length=40)
-    apellido=forms.CharField(max_length=40)
-    email=forms.EmailField()
-    dni=forms.IntegerField()
-
+    imagen=forms.FileField()
+    
 
 class UserRegisterForm(UserCreationForm):
     username=forms.CharField()
@@ -47,3 +32,6 @@ class UserEditform(UserCreationForm):
         model=User
         fields=["email", "password1", "password2", "first_name", "last_name"] 
         help_texts={k:"" for k in fields}
+
+class AvatarForm(forms.Form):
+    imagen=forms.ImageField(label="Imagen")
