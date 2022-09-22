@@ -9,6 +9,7 @@ class Vehiculos(models.Model):
     color=models.CharField(max_length=40)
     kilometros=models.IntegerField()
     imagen=models.ImageField(upload_to="imagenes", null=True)
+    fechaDePublicacion=models.DateTimeField(default=datetime.datetime.now)
     
     def __str__(self):
         return self.marca+" "+str(self.tipo)
