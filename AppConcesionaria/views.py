@@ -60,12 +60,12 @@ def editarVehiculo(request,id):
     if request.method=="POST":
         form=VehiculoFormulario(request.POST, request.FILES)
         if form.is_valid():
-            data=form.cleaned_data
-            vehi.marca=data["marca"]
-            vehi.tipo=data["tipo"]
-            vehi.color=data["color"]
-            vehi.imagen=data["imagen"]
-            vehi.kilometros=data["kilometros"]            
+            info=form.cleaned_data
+            vehi.marca=info["marca"]
+            vehi.tipo=info["tipo"]
+            vehi.color=info["color"]
+            vehi.imagen=info["imagen"]
+            vehi.kilometros=info["kilometros"]            
             vehi.save()            
         return render(request, "AppConcesionaria/guardado.html", {"Vehiculo":vehi})
     else:

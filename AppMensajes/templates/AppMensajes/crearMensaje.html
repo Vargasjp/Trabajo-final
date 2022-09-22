@@ -1,0 +1,24 @@
+{% extends "AppConcesionaria/padre.html" %}
+
+{% load static %}
+
+
+{% block titulo_de_pagina %}
+<h1 class="nb-5">Mensajes</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+<h1>Crear Mensaje:</h1>
+<form action="{% url 'crearMensaje' %}" method="POST"> {% csrf_token %}
+
+<table>
+
+    {{ formulario.as_table }}
+</table>
+     
+<input type="submit", value="Enviar">Enviar Mensaje
+
+</form>
+
+
+{% endblock %}
