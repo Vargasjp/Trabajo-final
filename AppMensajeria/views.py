@@ -5,30 +5,20 @@ from AppMensajeria.forms import *
 from AppMensajeria.models import *
 from django.views.generic.list import ListView
 from django.utils import timezone
+from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 # Create your views here.
 
-def crearMensaje(request):
-    if request.method=="POST":
-        form= FormularioMensaje(request.POST)
-        if form.is_valid():
-            info=form.cleaned_data
-            nombre=info["nombre"]
-            apellido=info["apellido"]
-            destinatario=info["destinatario"]
-            email=info["email"]
-            mensaje=info["mensaje"]
-            fecha=info["fecha"]
-            msj= Mensaje(nombre=nombre, apellido=apellido, destinatario=destinatario, email=email, mensaje=mensaje, fecha=fecha)
-            msj.save()
-            return render (request, "AppConcesionaria/inicio.html", {"mensaje": "Mensaje Creado"})
-        else:
-            return render (request, "AppConcesionaria/inicio.html", {"mensaje": "Error"})
-    else:
-        form=FormularioMensaje()
-    return render(request, "AppMensajeria/crearMensaje.html", {"formulario":form})
+class CrearMensaje(LoginRequiredMixin, CreateView):
+
+    model=Mensaje
+    success_url=reverse_lazy("leerMensajes")
+    fields = ['fecha','nombre', 'apellido', 'destinatario', 'mensaje', 'email']
 
 def leerMensajes(request):
-    mensajes=Mensaje.objects.all()
+    destinatario = request.user
+    mensajes=Mensaje.objects.filter(destinatario=destinatario)
     contexto={"mensajes":mensajes}
     return render(request, "AppMensajeria/leerMensajes.html", contexto)
 

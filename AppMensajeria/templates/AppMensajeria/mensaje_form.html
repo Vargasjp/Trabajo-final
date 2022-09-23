@@ -9,14 +9,9 @@
 
 {% block contenido_que_cambia %}
 <h1>Crear Mensaje:</h1>
-<form action="{% url 'crearMensaje' %}" method="POST"> {% csrf_token %}
-
-<table>
-
-    {{ formulario.as_table }}
-</table>
-     
-<input type="submit", value="Enviar">Enviar Mensaje
+<form method="post">{% csrf_token %}
+    {{ form.as_p}}
+    <input type="submit" value="Enviar">
 
 </form>
 
