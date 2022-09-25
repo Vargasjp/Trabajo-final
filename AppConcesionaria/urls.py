@@ -16,4 +16,6 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(template_name="AppConcesionaria/logout.html"), name="logout"),
     path("editarPerfil/", editarPerfil, name="editarPerfil"),
     path("verMas/<id>", verMas, name="verMas"),
+    path("agregarAvatar/", agregarAvatar, name="agregarAvatar"),
+    path("perfil/", perfil, name="perfil"),
 ]

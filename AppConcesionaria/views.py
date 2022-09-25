@@ -130,6 +130,13 @@ def editarPerfil(request):
         form=UserEditform(instance=usuario)
         return render(request, "AppConcesionaria/editarPerfil.html", {"form":form, "usuario":usuario})
 
+def perfil(request, pk=None):
+    if pk:
+        user = User.objects.get(pk=pk)
+    else:
+        user = request.user
+    return render(request, 'AppConcesionaria/perfil.html', {'user': user})
+
 def obtenerAvatar(request):
     lista=Avatar.objects.filter(user=request.user)
     if len(lista)!=0:
@@ -147,8 +154,8 @@ def agregarAvatar(request):
                 avatarViejo.delete()
             avatar=Avatar(user=request.user , imagen=formulario.cleaned_data["imagen"])
             avatar.save()
-            return render(request, "AppCoder/inicio.html", {"usuario":request.user, "mensaje":"AVATAR AGREGADO EXITOSAMENTE","imagen":obtenerAvatar(request)})
+            return render(request, "AppConcesionaria/inicio.html", {"usuario":request.user, "mensaje":"AVATAR AGREGADO EXITOSAMENTE","imagen":obtenerAvatar(request)})
     else:
         formulario=AvatarForm()
-    return render(request, "AppCoder/agregarAvatar.html", {"form":formulario, "usuario":request.user,"imagen":obtenerAvatar(request)})
+    return render(request, "AppConcesionaria/agregarAvatar.html", {"form":formulario, "usuario":request.user,"imagen":obtenerAvatar(request)})
 

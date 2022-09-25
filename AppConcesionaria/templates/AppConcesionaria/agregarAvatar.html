@@ -1,0 +1,20 @@
+{% extends "AppConcesionaria/padre.html" %}
+
+{% load static %}
+
+
+{% block titulo_de_pagina %}
+<h1 class="nb-5">Agregando Avatar de {{ usuario }}</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+<h1>Agregar Avatar</h1>
+<h1>{{ mensaje }}</h1>
+<form action="{% url 'agregarAvatar' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+
+    {{ form.as_p}}
+    <button type="submit">Agregar</button>
+
+</form>
+
+{% endblock %}
