@@ -1,12 +1,13 @@
 from django.http import HttpResponse
 from http.client import HTTPResponse
 from django.shortcuts import render
-
+from django.shortcuts import render, get_object_or_404, redirect
 from AppConcesionaria.forms import *
 from .models import Vehiculos, Avatar
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 def inicio(request):
@@ -55,23 +56,10 @@ def leerVehiculos(request):
     return render(request, "AppConcesionaria/nuestrosVehiculos.html", contexto)
 
 @login_required
-def editarVehiculo(request,id):
-    vehi=Vehiculos.objects.get(id=id)
-    if request.method=="POST":
-        form=VehiculoFormulario(request.POST, request.FILES)
-        if form.is_valid():
-            info=form.cleaned_data
-            vehi.marca=info["marca"]
-            vehi.tipo=info["tipo"]
-            vehi.color=info["color"]
-            vehi.imagen=info["imagen"]
-            vehi.kilometros=info["kilometros"]            
-            vehi.save()            
-        return render(request, "AppConcesionaria/guardado.html", {"Vehiculo":vehi})
-    else:
-        form=VehiculoFormulario(initial={"marca":vehi.marca, "tipo":vehi.tipo, "color":vehi.color, "kilometros":vehi.kilometros, "imagen":vehi.imagen })
-        return render(request, "AppConcesionaria/editarVehiculo.html", {"formulario":form, "marca":vehi.marca, "id":vehi.id})
-
+def editarVehiculo(request, id):
+    Vehiculos=vehiculosformulario.objects.get(id=id)
+    form=VehiculoFormulario (instance=Vehiculos)
+    return render(request, "AppConcesionaria/guardado.html", {"form":form, "Vehiculos":Vehiculos})
 
 def verMas(request,id):
     vehi=Vehiculos.objects.get(id=id)
