@@ -4,17 +4,17 @@
 
 
 {% block titulo_de_pagina %}
-<h1 class="nb-5">Perfil de  {{usuario.username}} </h1>
+<h1 class="nb-5"><p style="color: rgb(252, 249, 249);">Perfil de  {{usuario.username}} </p></h1>
 {% endblock %}
 
 {% block contenido_que_cambia %}
 
 
 <div style="padding: 20px;">
-    <p>Usuario: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>Nombre: {{ user.first_name }}</p>
-    <p>Apellido: {{ user.last_name }}</p>
+    <p style="color: rgb(252, 249, 249);">Usuario: {{ user.username }}</p>
+    <p style="color: rgb(252, 249, 249);">Email: {{ user.email }}</p>
+    <p style="color: rgb(252, 249, 249);">Nombre: {{ user.first_name }}</p>
+    <p style="color: rgb(252, 249, 249);">Apellido: {{ user.last_name }}</p>
 </div>
 <a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'editarPerfil' %}">Editar Perfil</a>
 <a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'agregarAvatar' %}">Agregar/Editar Avatar</a>

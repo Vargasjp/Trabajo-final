@@ -9,11 +9,11 @@
 
 {% block contenido_que_cambia %}
 
-<h1>Buscamos autos por marca</h1>
+<h1><p style="color: rgb(252, 249, 249);">Buscamos autos por marca</p></h1>
 
 <form action="{% url 'buscar' %}" method="GET"> {% csrf_token %}
 
-<p>Marca: <input type="text" name="marca", id="marca"></p>
+    <p style="color: rgb(252, 249, 249);">Marca: <input type="text" name="marca", id="marca"></p>
      
 <input type="submit", value="Buscar">
 

@@ -4,7 +4,7 @@
 
 
 {% block titulo_de_pagina %}
-<h1 class="nb-5">Nuestros Vehiculos</h1>
+<h1 class="nb-5"><p style="color: rgb(252, 249, 249);">Nuestros Vehiculos</p></h1>
 {% endblock %}
 
 {% block contenido_que_cambia %}
@@ -21,17 +21,12 @@
     <img class="card-img-top" src="{{v.imagen.url}}" alt="..."/>
     {% endif %}
 </div>
-<button>
-    <a href="{% url 'editarVehiculo' v.id %}">Editar</a>
-    <a href="{% url 'verMas' v.id %}">Ver más</a>
+    <input class="btn btn-outline-light mt-auto" type="submit" value="Editar Vehiculo"  href="{% url 'editarVehiculo' v.id %}">
+    <input class="btn btn-outline-light mt-auto" type="submit" value="Ver Mas"  href="{% url 'verMas' v.id %}">
 
-</button>
-<p style="color: white">----------------------------------------------</p>
+<p style="color: rgb(255, 255, 255)">----------------------------------------------</p>
 {% endfor %}
 
-<button>
-    <a href="{% url 'busquedaVehiculo' %}">Buscar Vehiculo</a>
-
-</button>
+   <input class="btn btn-outline-light mt-auto" type="submit" value="Buscar Vehiculo"  href="{% url 'busquedaVehiculo' %}">
 
 {% endblock %}
