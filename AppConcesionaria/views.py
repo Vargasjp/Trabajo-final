@@ -1,6 +1,5 @@
+from multiprocessing import context
 from django.http import HttpResponse
-from http.client import HTTPResponse
-from django.shortcuts import render
 from django.shortcuts import render
 from AppConcesionaria.forms import *
 from .models import Vehiculos, Avatar
@@ -11,10 +10,10 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def inicio(request):
-    return render(request, "AppConcesionaria/inicio.html")
+    return render(request, "AppConcesionaria/inicio.html", {"imagen":obtenerAvatar(request)})
     
 def sobreNosotros(request):
-    return render(request, "AppConcesionaria/sobreNosotros.html")
+    return render(request, "AppConcesionaria/sobreNosotros.html", {"imagen":obtenerAvatar(request)})
     
 #Nuestros vehiculos-------------
 @login_required
@@ -31,11 +30,11 @@ def vehiculosformulario(request):
             return render(request, "AppConcesionaria/inicio.html", {"mensaje": "Error"})
     else:
         Vehiform=VehiculoFormulario()
-        return render(request, "AppConcesionaria/accesoVehiculos.html", {"formulario":Vehiform})
+        return render(request, "AppConcesionaria/accesoVehiculos.html", {"formulario":Vehiform,"imagen":obtenerAvatar(request)})
 
 
 def busquedaVehiculo(request):
-    return render(request, "AppConcesionaria/busquedaVehiculo.html")
+    return render(request, "AppConcesionaria/busquedaVehiculo.html", {"imagen":obtenerAvatar(request)})
 
 def buscar(request):
     if request.GET["marca"]:
@@ -46,44 +45,48 @@ def buscar(request):
         else:
             return render(request, "AppConcesionaria/ResultadoBusqueda.html", {"mensaje": "No hay vehiculos de esa Marca"})
     else:
-        return render(request, "AppConcesionaria/busquedaVehiculo.html", {"mensaje": "No enviaste datos!"})
+        return render(request, "AppConcesionaria/busquedaVehiculo.html", {"mensaje": "No enviaste datos!", "imagen":obtenerAvatar(request)})
 
 
 
 def leerVehiculos(request):
     vehiculos=Vehiculos.objects.all()
-    contexto={"vehiculos":vehiculos}
-    return render(request, "AppConcesionaria/nuestrosVehiculos.html", contexto)
+    return render(request, "AppConcesionaria/nuestrosVehiculos.html", {"vehiculos":vehiculos, "imagen":obtenerAvatar(request)})
 
 @login_required
-def editarVehiculo(request,id):
+def editarVehiculo(request, id):
     vehi=Vehiculos.objects.get(id=id)
-    if request.method=="POST":
+    if request.method== "POST":
         form=VehiculoFormulario(request.POST, request.FILES)
+        print(form)
         if form.is_valid():
             info=form.cleaned_data
             vehi.marca=info["marca"]
             vehi.tipo=info["tipo"]
             vehi.color=info["color"]
-            vehi.imagen=info["imagen"]
-            vehi.kilometros=info["kilometros"]            
-            vehi.save()            
-        return render(request, "AppConcesionaria/guardado.html", {"Vehiculo":vehi})
+            vehi.kilometros=info["kilometros"] 
+            vehi.imagen=info["imagen"]             
+            vehi.save()  
+            listavehi=Vehiculos.objects.all() 
+            context={"vehiculos":listavehi}
+            return render(request, "AppConcesionaria/guardado.html", context )  
+        else:
+             return render(request, "AppConcesionaria/guardado.html", {"mensaje":"Error al guardar", "imagen":obtenerAvatar(request)})  
     else:
         form=VehiculoFormulario(initial={"marca":vehi.marca, "tipo":vehi.tipo, "color":vehi.color, "kilometros":vehi.kilometros, "imagen":vehi.imagen })
-        return render(request, "AppConcesionaria/editarVehiculo.html", {"formulario":form, "marca":vehi.marca, "id":vehi.id})
+        return render(request, "AppConcesionaria/editarVehiculo.html", {"formulario":form, "marca":vehi.marca, "id":vehi.id, "imagen":obtenerAvatar(request)})
 
 def verMas(request,id):
     vehi=Vehiculos.objects.get(id=id)
     imagen=vehi.imagen
-    return render(request, "AppConcesionaria/verMas.html", { "vehiculo":vehi, "imagen":imagen})
+    return render(request, "AppConcesionaria/verMas.html", { "vehiculo":vehi, "imagen":imagen, "imagen":obtenerAvatar(request)})
 
 @login_required
 def eliminarVehiculo(request, id):
     Vehi=Vehiculos.objects.get(id=id)
     Vehi.delete()
     vehiculos=Vehiculos.objects.all()
-    return render(request, "AppConcesionaria/nuestrosVehiculos.html", {"vehiculos":vehiculos})
+    return render(request, "AppConcesionaria/nuestrosVehiculos.html", {"vehiculos":vehiculos,"imagen":obtenerAvatar(request) })
 
 #usuario
 def login_request(request):
@@ -102,7 +105,7 @@ def login_request(request):
             return render(request, "AppConcesionaria/login.html", {"form":form,"mensaje":"Formulario Invalido"})
     else:
         form=AuthenticationForm()
-        return render(request, "AppConcesionaria/login.html", {"form":form})
+        return render(request, "AppConcesionaria/login.html", {"form":form, "imagen":obtenerAvatar(request)})
 
 def register(request):
     if request.method=="POST":
@@ -113,7 +116,7 @@ def register(request):
             return render(request, "AppConcesionaria/inicio.html", {"mensaje":f"Usuario: {username} creado"})
     else:
         form=UserRegisterForm()
-    return render(request,"AppConcesionaria/register.html", {"form":form})
+    return render(request,"AppConcesionaria/register.html", {"form":form, "imagen":obtenerAvatar(request)})
 
 @login_required
 def editarPerfil(request):
@@ -126,17 +129,19 @@ def editarPerfil(request):
             usuario.email=form.cleaned_data["email"]
             usuario.save()
             return render(request, "AppConcesionaria/inicio.html", {"mensaje":f"Perfil de {usuario} editado"})
+        else:
+            return render(request, "AppConcesionaria/inicio.html", {"mensaje":f"Perfil de {usuario} no editado"})
     else:
         form=UserEditform(instance=usuario)
-        return render(request, "AppConcesionaria/editarPerfil.html", {"form":form, "usuario":usuario})
+        return render(request, "AppConcesionaria/editarPerfil.html", {"form":form, "usuario":usuario, "imagen":obtenerAvatar(request)})
 
 @login_required
 def perfil(request, pk=None):
     if pk:
-        user = User.objects.get(pk=pk)
+        usuario=User.objects.get(pk=pk)
     else:
-        user = request.user
-    return render(request, 'AppConcesionaria/perfil.html', {'user': user})
+        usuario=request.user
+    return render(request, 'AppConcesionaria/perfil.html', {'user':usuario,"imagen":obtenerAvatar(request)})
 
 def obtenerAvatar(request):
     lista=Avatar.objects.filter(user=request.user)

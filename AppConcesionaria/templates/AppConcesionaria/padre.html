@@ -42,8 +42,8 @@
                     <a class="navbar-brand" href="{% url 'login' %}">Iniciar Sesion</a>
                     <a class="navbar-brand" href="{% url 'register' %}">Registrate!</a>
                     {% else %}
-                    <p>Hola {{ user.username }}</p>
-                    <img class="col-lg-2" src="{{ imagen }}" alt="">
+                    <p>Usuario: {{ user.username }}</p>
+                    <img width="30" height="30" src="{{ imagen }}" alt="">
 
                     
                     
