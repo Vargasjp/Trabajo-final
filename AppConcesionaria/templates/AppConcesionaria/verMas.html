@@ -14,10 +14,15 @@
     <p style="color: white"> Fecha de publicacion: {{vehiculo.fechaDePublicacion}} <br>  
         Tipo: {{vehiculo.tipo}} <br> Marca: {{vehiculo.marca }}
         <br> Color: {{vehiculo.color}} <br> Kilometros: {{vehiculo.kilometros}}
-    </p>
-    
+    </p>    
 </h4>
-<a href="{% url 'eliminarVehiculo' vehiculo.id %}">Eliminar</a>
+<div>
+    {% if vehiculo.imagen %}
+    <img class="card-img-top" src="{{vehiculo.imagen.url}}" alt="..."/>
+    {% endif %}
+</div>
+<a class="btn btn-outline-light mt-auto" href="{% url 'editarVehiculo' vehiculo.id %}">Editar</a>
+<a class="btn btn-outline-light mt-auto" href="{% url 'eliminarVehiculo' vehiculo.id %}">Eliminar</a>
 
 
 

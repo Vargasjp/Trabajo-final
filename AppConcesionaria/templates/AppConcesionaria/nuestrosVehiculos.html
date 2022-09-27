@@ -21,12 +21,13 @@
     <img class="card-img-top" src="{{v.imagen.url}}" alt="..."/>
     {% endif %}
 </div>
-    <input class="btn btn-outline-light mt-auto" type="submit" value="Editar Vehiculo"  href="{% url 'editarVehiculo' v.id %}">
-    <input class="btn btn-outline-light mt-auto" type="submit" value="Ver Mas"  href="{% url 'verMas' v.id %}">
+<a class="btn btn-outline-light mt-auto" href="{% url 'verMas' v.id %}">Ver Mas</a>
+
 
 <p style="color: rgb(255, 255, 255)">----------------------------------------------</p>
 {% endfor %}
 
-   <input class="btn btn-outline-light mt-auto" type="submit" value="Buscar Vehiculo"  href="{% url 'busquedaVehiculo' %}">
+<a class="btn btn-outline-light mt-auto" href="{% url 'busquedaVehiculo' %}">Buscar Vehiculo</a>
+<a class="btn btn-outline-light mt-auto" href="{% url 'vehiculosFormulario' %}">Agregar Vehiculo</a>
 
 {% endblock %}

@@ -43,7 +43,7 @@
                     <a class="navbar-brand" href="{% url 'register' %}">Registrate!</a>
                     {% else %}
                     <p>Hola {{ user.username }}</p>
-                    <img src="{{ imagen }}" alt="">
+                    <img class="col-lg-2" src="{{ imagen }}" alt="">
 
                     
                     
@@ -78,18 +78,7 @@
                     {% endblock %}
                 </p>
             </div>
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-
-                <div class="col-lg-8">
-                    <h2 class="text-white mb-4">Built with Bootstrap 5</h2>
-                    <p class="text-white-50">
-                        Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now,
-                        simply download the template on
-                        <a href="https://startbootstrap.com/theme/grayscale/">the preview page.</a>
-                        The theme is open source, and you can use it for any purpose, personal or commercial.
-                    </p>
-                </div>
-            </div>
+           
             <img class="img-fluid" src="static/assets/img/auto.png" alt="..." />
         </div>
     </section>
@@ -102,10 +91,8 @@
                         src="static/assets/img/bg-masthead.jpg" alt="..." /></div>
                 <div class="col-xl-4 col-lg-5">
                     <div class="featured-text text-center text-lg-left">
-                        <h4>Shoreline</h4>
-                        <p class="text-black-50 mb-0">Grayscale is open source and MIT licensed. This means you can use
-                            it for any project - even commercial projects! Download it, customize it, and publish your
-                            website!</p>
+                        <h1>Un espacio para mostrar tu vehiculo</h1>
+                        
                     </div>
                 </div>
             </div>
@@ -147,9 +134,8 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5">
                 <div class="col-md-10 col-lg-8 mx-auto text-center">
-                    <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-                    <td class="tddatacenter"><a
-                        href="{% url 'sobreNosotros' %}">Sobre Nosotros</a></td>
+                    <td  class="tddatacenter"><h1><a style="color: rgb(252, 249, 249);"
+                        href="{% url 'sobreNosotros' %}">Sobre Nosotros</a></h1></td>
                 </div>
             </div>
         </div>

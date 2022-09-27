@@ -9,10 +9,10 @@
 
 {% block contenido_que_cambia %}
 <h1><p style="color: rgb(252, 249, 249);">Formulario de REGISTRO</p></h1>
-<h1>{{ mensaje }}</h1>
+<h1><p style="color:rgb(252, 249, 249);">{{ mensaje }}</p></h1>
 <form action="{% url 'register' %}" method="POST"> {% csrf_token %}
 
-    {{ form.as_p}}
+    {{form.as_p}}
     <input class="btn btn-outline-light mt-auto" type="submit" value="Registrate"  href="">
 
 </form>

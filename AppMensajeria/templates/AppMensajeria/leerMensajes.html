@@ -10,14 +10,15 @@
 {% block contenido_que_cambia %}
 
 {% for m in mensajes %}
-<h4> De{{ m.apellido }}, {{m.nombre}}   <br> Fecha:{{m.fecha}}</h4>
-<button>
-    
-    <a href="{% url 'verMensaje' m.id %}">Ver más</a>
+<h4> <p style="color: rgb(255, 255, 255)"> De {{ m.apellido }}, {{m.nombre}} <br> Fecha:{{m.fecha}}</p></h4>
 
-</button>
 
-{% endfor %} 
+    <a class="btn btn-outline-light mt-auto" href="{% url 'verMensaje' m.id %}">Ver más</a>
 
-<a class="btn btn-danger" href="{% url 'crearMensaje' %}">Crear Mensaje </a>
+
+
+{% endfor %}
+<div>
+<a class="btn btn-outline-light mt-auto" href="{% url 'crearMensaje' %}">Crear Mensaje </a>
+</div>
 {% endblock %}
