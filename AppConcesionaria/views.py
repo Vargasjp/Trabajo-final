@@ -143,6 +143,7 @@ def perfil(request, pk=None):
         usuario=request.user
     return render(request, 'AppConcesionaria/perfil.html', {'user':usuario,"imagen":obtenerAvatar(request)})
 
+@login_required
 def obtenerAvatar(request):
     lista=Avatar.objects.filter(user=request.user)
     if len(lista)!=0:
@@ -151,6 +152,7 @@ def obtenerAvatar(request):
         imagen=None
     return imagen
 
+@login_required
 def agregarAvatar(request):
     if request.method=="POST":
         formulario=AvatarForm(request.POST, request.FILES)
