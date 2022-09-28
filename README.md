@@ -1,19 +1,5 @@
-# Entrega1-Palacios-Vargas
+Entrega final Leonardo Palacios y Juan Pablo Vargas de Coderhouse
 
-Primera entrega proyecto final
+Curso: Programación en Python
 
-Buenos días, en este caso nos decidimos por hacer una web sobre una concesionaria de vehículos de todo tipo, detallo debajo las distinas urls disponibles:
-
-*ACLARACION: Todas estas urls que probaremos a continuacion tienen sus botones en el margen superior para que podamos tener un link directo.*
-
-AppConcesionaria/: Tendremos la presentación de la web
-
-AppConcesionaria/vehiculos/: En esta URL podremos agregar vehículos a la BD siguiendo las características de Marca, Modelo, Color y Kilometraje.
-
-AppConcesionaria/clientes/: En esta URL podremos agregar clientes a la BD siguiendo los parámetros Nombre, Apellido, Email y DNI.
-
-AppConcesionaria/empleados/: En esta URL podremos agregar clientes a la BD siguiendo los parámetros Nombre, Apellido, Email, DNI, cargo.
-
-AppConcesionaria/busquedaCliente/: Aquí buscaremos a los clientes colocando el DNI de alguien que realizo una compra, al clickear en "Buscar" nos direccionara 
-      a los resultados de la busquedanos que nos  mostrará toda la información del cliente.
-      
+Buenos días/tardes/noches, en este caso les presentamos el trabajo final que realizamos como entrega para el último desafío del curso, se trata de una web diseñada para que entre usuarios tengan la posibilidad de mostrar sus autos con las distintas características correspondientes, ambos realizamos por completo la web y a la par, ya que no contamos con secciones realizadas de manera íntegra por uno de los dos participantes.
