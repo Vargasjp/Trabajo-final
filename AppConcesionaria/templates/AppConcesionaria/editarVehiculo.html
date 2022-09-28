@@ -4,14 +4,14 @@
 
 
 {% block titulo_de_pagina %}
-<h1 class="nb-5">Editando Vehiculo</h1>
+<h1 class="nb-5" style="color: rgb(252, 249, 249);">Editando Vehiculo</h1>
 {% endblock %}
 
 {% block contenido_que_cambia %}
-<h1>Editando la Info del Vehiculo {{ marca }}</h1>
+<h1 style="color: rgb(252, 249, 249);">Editando la Info del Vehiculo {{ marca }}</h1>
 <form action="{% url 'editarVehiculo' id %}" method="POST"> {% csrf_token %}
 
-<table>
+<table style="color: rgb(252, 249, 249);">
 
     {{ formulario.as_table }}
 </table>

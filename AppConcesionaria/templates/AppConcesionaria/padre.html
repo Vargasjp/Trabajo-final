@@ -42,11 +42,8 @@
                     <a class="navbar-brand" href="{% url 'login' %}">Iniciar Sesion</a>
                     <a class="navbar-brand" href="{% url 'register' %}">Registrate!</a>
                     {% else %}
-                    <p>Usuario: {{ user.username }}</p>
+                    <p style="color: rgb(252, 249, 249);">Usuario: {{ user.username }}</p>
                     <img width="30" height="30" src="{{ imagen }}" alt="">
-
-                    
-                    
                     <a class="navbar-brand" href="{% url 'leerMensajes' %}">Mensajes</a>
                     <a class="navbar-brand" href="{% url 'perfil' %}">Mi Perfil</a>
                     <a class="navbar-brand" href="{% url 'logout' %}">Cerrar Sesion</a>
@@ -160,7 +157,7 @@
                             <i class="fas fa-envelope text-primary mb-2"></i>
                             <h4 class="text-uppercase m-0">Email</h4>
                             <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50"><a href="#!">hello@yourdomain.com</a></div>
+                            <div class="small text-black-50"><a href="#!">concesionariaPV@yourdomain.com</a></div>
                         </div>
                     </div>
                 </div>
@@ -168,9 +165,10 @@
                     <div class="card py-4 h-100">
                         <div class="card-body text-center">
                             <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0">Phone</h4>
+                            <h4 class="text-uppercase m-0">Linkedin</h4>
                             <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50">+1 (555) 902-8832</div>
+                            <div class="small text-black-50">Palacios Leonardo: https://www.linkedin.com/in/leonardo-palacios-b2b52120a</div>
+                            <div class="small text-black-50">Vargas Juan pablo: https://www.linkedin.com/in/juan-pablo-vargas-364824144/</div>
                         </div>
                     </div>
                 </div>
